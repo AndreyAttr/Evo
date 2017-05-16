@@ -13,6 +13,8 @@ import Site from "../Models/site";
 import {AppState} from "../AppState/app-state";
 import DI from "../Helpers/di-helper";
 import {SiteEnum, SITE_ENUMS_TOKEN} from "../Enums/site-enum";
+import DnaInteractionService from "../Services/dna-interaction.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
     moduleId: module.id,
@@ -20,22 +22,20 @@ import {SiteEnum, SITE_ENUMS_TOKEN} from "../Enums/site-enum";
     templateUrl: '../Html/gene.component.html',
     styles: [String(require('../Css/gene.component.less'))],
     //only when they are here - it will create new instance of this component every time:
-    providers: [geneServiceProvider, mutationServiceProvider, Gene,
-        // {provide: SiteEnum, useValue:  SiteEnum},
-        // {provide: DnaEnum, useValue: DnaEnum}
+    providers: [geneServiceProvider, mutationServiceProvider, Gene
     ],
     inputs: ['dna'],
-    outputs: ['removeEvent:remove']
+    //outputs: ['removeEvent:remove']
 })
 export class GeneComponent implements OnInit, OnDestroy {
     // @Input() dna: DnaEnum;
     // @Output('remove') removeEvent = new EventEmitter<DnaEnum>();
     dna: DnaEnum;
-    removeEvent = new EventEmitter<DnaEnum>();
+    //removeEvent = new EventEmitter<DnaEnum>();
     gene: Gene;
-    isVisible = true;
 
     constructor(@Optional() protected log: LogService,
+                private dnaInteraction: DnaInteractionService,
                 @Inject(APP_CONFIG_TOKEN) protected config: AppConfig,
                 //private geneService: GeneService,
                 //@Inject(SITE_ENUMS_TOKEN) protected siteEnum: SiteEnum,
@@ -50,11 +50,10 @@ export class GeneComponent implements OnInit, OnDestroy {
 
         if (this.log) {
             this.log.log(`Gene ${this.gene.name} created!!!`);
-            this.log.log(`The API is ${this.config.apiEndpoint}`);
+            //this.log.log(`The API is ${this.config.apiEndpoint}`);
         }
     }
     ngOnDestroy(): void {
-        //throw new Error('Method not implemented.');
         console.log(`Gene ${this.gene.name} is destroyed!`);
     }
 
@@ -73,7 +72,7 @@ export class GeneComponent implements OnInit, OnDestroy {
     }
 
     removeGene(){
-        this.isVisible = false;
-        this.removeEvent.emit(this.dna);
+        //this.removeEvent.emit(this.dna);
+        this.dnaInteraction.dnaRemove(this.dna);
     }
 }

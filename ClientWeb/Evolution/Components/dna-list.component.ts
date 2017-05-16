@@ -17,11 +17,4 @@ export class DnaListComponent extends DnaComponent {
     get dnaList(){
         return this.appState.state.selectedDnas;
     }
-
-    @Output('remove') removeEvent = new EventEmitter<DnaEnum>();
-    removeGene(dna:DnaEnum)
-    {
-        //TODO: here must be readdressing work to dna-selector.component by using routing(because right now it's a bubble event raising!!!)
-        this.removeEvent.emit(dna);
-    }
 }
