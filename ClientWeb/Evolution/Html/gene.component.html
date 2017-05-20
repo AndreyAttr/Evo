@@ -1,16 +1,47 @@
-<div class="gene">
-    <h4 ngClass="dnaName" highlight="blue">{{gene.name}}</h4>
-    <p>{{gene.description}}</p>
+<div class="gene" highlight
+     [highlight-params]="{color: '#000000', opacity: '1.0', border: 'solid 1px black', borderRadius: '8px', fontWeight: 'bold', customClass: null}"
+     (click)="siteFocused($event, dna)">
+    <div ngClass="row">
+        <div ngClass="col-xs-6">
+            <h4 ngClass="dnaName" highlight="#dcfbfb" [highlight-params]="{customClass: 'dna-name-title'}">{{gene.name}}</h4>
+            <p>{{gene.description}}</p>
+        </div>
+        <div ngClass="col-xs-1 col-xs-offset-5 gene-remove-button-container">
+            <button ngClass="btn btn-danger btn-xs gene-remove-button" (click)="removeGene()">X</button>
+        </div>
+        <!--<div class="clearfix visible-xs-block"></div>-->
+    </div>
+
+    <!--<div ngClass="col-xs-2">Original</div>-->
+    <!--<div ngClass="col-xs-10" style="overflow-x: auto; width: 300px">-->
+        <!--<span *ngFor="let site of gene.sites" [class]="site.name">{{site.name}}</span>-->
+    <!--</div>-->
+
     <div [ngClass]="bold">Gene sites</div>
-    <table highlight="yellow">
-        <tr>
-            <td>Original</td>
-            <td *ngFor="let site of gene.sites" [class]="site.name">{{site.name}}</td>       <!--[class.site-mutated]="site.isMutated"-->
-        </tr>
-        <tr *ngIf="gene.mutationSites.length > 0">
-            <td>Mutated</td>
-            <td *ngFor="let site of gene.mutationSites" [ngClass]="site.setSiteCssClasses()" [class]="site.name" (click)="mutate(site)">{{site.name}}</td> <!--[class]="site.isMutated ? 'site-mutated': site.name"-->
-        </tr>
-    </table>
-    <button class="gene-remove-button" (click)="removeGene()">Remove</button>
+    <!--<table highlight="#dcfbfb" [highlight-params]="{borderRadius: '8px'}">-->
+        <!--<tr>-->
+            <!--<td>Original</td>-->
+            <!--<td *ngFor="let site of gene.sites" [class]="site.name">{{site.name}}</td>       &lt;!&ndash;[class.site-mutated]="site.isMutated"&ndash;&gt;-->
+        <!--</tr>-->
+        <!--<tr *ngIf="gene.mutationSites.length > 0">-->
+            <!--<td>Mutated</td>-->
+            <!--<td *ngFor="let site of gene.mutationSites" [ngClass]="site.setSiteCssClasses()" [class]="site.name" (click)="mutate(site)">{{site.name}}</td> &lt;!&ndash;[class]="site.isMutated ? 'site-mutated': site.name"&ndash;&gt;-->
+        <!--</tr>-->
+    <!--</table>-->
+
+    <div highlight="#dcfbfb" [highlight-params]="{borderRadius: '8px'}">
+        <div ngClass="row">
+            <div ngClass="col-xs-1 gene-label-sites-container">Original</div>
+            <div ngClass="col-xs-10 col-xs-offset-1 gene-sites-container">
+                <span *ngFor="let site of gene.sites" [class]="site.name" (click)="siteFocused($event, site.site)">{{site.name}}</span>       <!--[class.site-mutated]="site.isMutated"-->
+            </div>
+        </div>
+        <div *ngIf="gene.mutationSites.length > 0" ngClass="row">
+            <div ngClass="col-xs-1 gene-label-sites-container">Mutated</div>
+            <div ngClass="col-xs-10 col-xs-offset-1 gene-sites-container">
+                <span *ngFor="let site of gene.mutationSites" [ngClass]="site.setSiteCssClasses()" [class]="site.name" (click)="mutate(site)">{{site.name}}</span> <!--[class]="site.isMutated ? 'site-mutated': site.name"-->
+            </div>
+        </div>
+    </div>
+
 </div>

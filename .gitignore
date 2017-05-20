@@ -244,18 +244,27 @@ ModelManifest.xml
 
 /ClientWeb/.vscode/chrome
 /ClientWeb/.idea
+
 /ClientWeb/wwwroot/dist/web
 /ClientWeb/output
+
 /ClientWeb/Angular2/**/*.map
 /ClientWeb/Angular2/**/*.js
+
 /ClientWeb/Webpack/**/*.map
 /ClientWeb/Webpack/**/*.js
+!/ClientWeb/Webpack/**/bootstrap.config.js
 /ClientWeb/webpack.config.js
 /ClientWeb/webpack.config.js.map
+/ClientWeb/ts.code.samples.js
+/ClientWeb/ts.code.samples.js.map
 
 /ClientWeb/Evolution/**/*.js
 /ClientWeb/Evolution/**/*.map
 
 
 /Web/wwwroot/Angular2/**/*.js
+
+/ClientWeb/src/*.map
+/ClientWeb/src/*.js
 

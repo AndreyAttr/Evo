@@ -1,30 +1,58 @@
 @import "common-text";      /*LESS*/
+@import "common-gene";
+//@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
 
-h4.dnaName{
+.dnaName{
   .underline;   /*LESS - mixins*/
   .italic;
-  font-family: Algerian;
+  font-family: Tahoma;
   font-size: 25px;
   color: #7c4dff;
-
+  display: inline-block;
+  padding: 0px 10px;
 }
 
-.gene{border: solid 1px black;}
+.gene{
+  //display:inline-block;
+  //clear:both;
+  //float:left;
+  color: white;
+  padding: 0px 4px;
+  margin: 4px 0px;
+  opacity: 0.4;
+  //min-width: 340px;
+  padding-bottom: 5px;
+}
 .gene-remove-button {
   position:relative;
-  //top:0;
   //right:0;
   float: right;
-  margin-right: 20px;
-  top: -130px;
+  //margin-right: -12px;
+  top: 5px;
+  //right: -10px;
   font-weight: bold;
   border-width: 1px;
 }
+div.gene-remove-button-container{
+  padding-left: 0px;
+}
+div.gene-sites-container{
+  max-width: 700px;
+  //http://theory.phphtml.net/css/overflow-wrap.html
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  //word-break: break-all;
 
+  //overflow-x: auto;
+  //-o-text-overflow: ellipsis;
+  //text-overflow: ellipsis;
+}
 
-.A {color: red; background-color: greenyellow;}
-.C {color: blue; background-color: yellow; border: dashed 1px black;}
-.G {color: forestgreen;  background-color: #84ffff;}
-.T {color: orangered; background-color: deepskyblue;}
-.site-mutated {color: white; background-color: black;}
+.dna-name-title{
+  border: solid 1px #000000;
+  border-radius: 8px;
+  display: inline-block;
+  padding-bottom: 4px !important;
+  .dnaName;
+}
 

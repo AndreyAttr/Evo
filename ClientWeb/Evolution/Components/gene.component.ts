@@ -15,6 +15,7 @@ import DI from "../Helpers/di-helper";
 import {SiteEnum, SITE_ENUMS_TOKEN} from "../Enums/site-enum";
 import DnaInteractionService from "../Services/dna-interaction.service";
 import {Subscription} from "rxjs/Subscription";
+import {SiteInteractionService} from "../Services/site-interaction.service";
 
 @Component({
     moduleId: module.id,
@@ -36,6 +37,7 @@ export class GeneComponent implements OnInit, OnDestroy {
 
     constructor(@Optional() protected log: LogService,
                 private dnaInteraction: DnaInteractionService,
+                private siteInteraction: SiteInteractionService,
                 @Inject(APP_CONFIG_TOKEN) protected config: AppConfig,
                 //private geneService: GeneService,
                 //@Inject(SITE_ENUMS_TOKEN) protected siteEnum: SiteEnum,
@@ -74,5 +76,10 @@ export class GeneComponent implements OnInit, OnDestroy {
     removeGene(){
         //this.removeEvent.emit(this.dna);
         this.dnaInteraction.dnaRemove(this.dna);
+    }
+
+    siteFocused(event: Event, molecule: SiteEnum|DnaEnum){
+        event.stopPropagation();
+        this.siteInteraction.siteHover(molecule);
     }
 }

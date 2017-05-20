@@ -17,8 +17,10 @@ import {DnaListComponent} from "../Components/dna-list.component";
 import {SiteEnum, SITE_ENUMS_TOKEN} from "../Enums/site-enum";
 import {DnaEnum, DNA_ENUM_TOKEN} from "../Enums/dna-enum";
 import {HighlightDirective} from "../Directives/highlight.directive";
+import {MoleculeViewerComponent} from "../Components/molecule-viewer.component";
 
-const componentDeclarations = [AppComponent, DnaListComponent, GeneComponent, DnaSelectorComponent];
+const componentDeclarations = [AppComponent, DnaListComponent, GeneComponent, DnaSelectorComponent,
+    MoleculeViewerComponent];
 const directiveDeclarations:Array<Type<any> | any[]> = [HighlightDirective];
 const pipeDeclarations:Array<Type<any> | any[]> = [];
 

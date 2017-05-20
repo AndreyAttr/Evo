@@ -1,0 +1,19 @@
+.background-color(@color: #CCCCCC){
+  background-color: @color;
+}
+.background-image(@image, @repeat: no-repeat){
+  background: @image @repeat;
+}
+
+.dna-background{
+  .background-image(url('../../wwwroot/images/dna.gif'));
+}
+
+.z-dna{
+  .background-image(@image: url('../../wwwroot/images/Z-DNA_orbit_animated.gif'));
+  //.background-color(lime);
+}
+
+.dark-background-color{
+  .background-color(#aaaaaa);
+}

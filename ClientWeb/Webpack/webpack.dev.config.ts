@@ -2,7 +2,7 @@
 /// <reference path="typings/webpack.d.ts" />
 
 import Common from "./webpack.common.config";
-const { HotModuleReplacementPlugin, NamedModulesPlugin } = require('webpack');
+const { HotModuleReplacementPlugin, NamedModulesPlugin, ProvidePlugin } = require('webpack');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const webpackMerge = require('webpack-merge');
 import helper = require('./helpers/path.helper');
@@ -13,7 +13,12 @@ module.exports = function webpackDevConfig(options: EnvOptions = {}): IWebpackCo
     const common = new Common(options);
     return webpackMerge(common.Configuration, {
         //cache: true,                                  //TODO: need or not?
-        devtool: "cheap-eval-source-map", //For HMR - https://github.com/webpack/webpack/issues/2478#issuecomment-220205767  //https://webpack.js.org/configuration/devtool/     https://webpack.js.org/guides/development/
+
+        //devtool: "cheap-eval-source-map", //For HMR - https://github.com/webpack/webpack/issues/2478#issuecomment-220205767  //https://webpack.js.org/configuration/devtool/     https://webpack.js.org/guides/development/
+        //https://webpack.js.org/configuration/devtool/#devtool
+        devtool: 'cheap-module-eval-source-map',
+        //cheap-eval-source-map                           - transformed code (lines only) ---  transpiled JS files
+        //eval-source-map, cheap-module-eval-source-map   - original source --- TS files
 
         module: {
             rules: [
@@ -46,6 +51,14 @@ module.exports = function webpackDevConfig(options: EnvOptions = {}): IWebpackCo
                 alwaysNotify: true,             //cause double notification
                 //skipFirstNotification: true
             }),
+
+            //https://github.com/AngularClass/angular2-webpack-starter/issues/696#issuecomment-226442566
+            // new ProvidePlugin({     //automatically loads modules
+            //     $: 'jquery',
+            //     jQuery: 'jquery',
+            //     'window.jQuery': 'jquery',
+            //     'window.$': 'jquery'
+            // })
         ].concat(common.Metadata.HMR ? new HotModuleReplacementPlugin() : []),     // enable HMR
 
         //https://webpack.js.org/configuration/dev-server

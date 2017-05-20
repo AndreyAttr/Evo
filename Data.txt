@@ -16,22 +16,41 @@ yo aspnetcore-spa
 --save  it's equivalent for -S
 --save-deve it's equivalent for -D
 
+Check outdated packages:
+		E:\Evo\ClientWeb>npm outdated
+		Package     Current  Wanted  Latest  Location
+		jquery        2.2.4   3.2.1   3.2.1  TravelOrganizerWeb
+		typescript    2.2.2   2.3.1   2.3.1  TravelOrganizerWeb
+ 
+ https://www.npmjs.com/package/npm-check-updates
+ npm install -g npm-check-updates
+ PM> ncu													Show any new dependencies for the project in the current directory
+		Using E:\Evo\ClientWeb\package.json
+		 css  ^1.2.1  →  ^2.2.1 
+		Run ncu with -u to upgrade package.json
+ ncu -u														Run with -u to upgrade your package.json(npm-check-updates -u)
+ 
+ Then need to update dependencies:									
+ 
+ npm update --save										to update only dependencies(when you in project directory)
+ npm update --save-dev									to update only devDependencies(when you in project directory)
+ npm install											install all dependencies & devDependencies from package.json
+ npm update												update  all dependencies & devDependencies from package.json
+ npm uninstall -S bootstrap								uninstall 'bootstrap' from dependencies
+
+
 npm install --save ts-loader							installation package to the current project dependencies(locally)
 npm install zone.js@0.8.5 --save						installation package to the current project dependencies(locally) with specific version
 npm install --save-dev webpack-notifier					installation package to the current project devDependencies(locally)
 npm install webpack babel-loader babel-core --save-dev	install several packages to devDependencies(locally): webpack, babel-loader, babel-core
 npm install gulp -g										installation package on the machine(globally)
 
+npm install -S typescript@2.2.2							install specific versiont to dependencies
+TravelOrganizerWeb@1.0.0 E:\Evo\ClientWeb
+`-- typescript@2.2.2
 
- npm update --save										to update only dependencies(when you in project directory)
- npm update --save-dev									to update only devDependencies(when you in project directory)
- npm install											install all dependencies & devDependencies from package.json
- npm update												update  all dependencies & devDependencies from package.json
 
- https://www.npmjs.com/package/npm-check-updates
- npm install -g npm-check-updates
- ncu													Show any new dependencies for the project in the current directory
- ncu -u													Run with -u to upgrade your package.json
+
 
  "@angular/common": "latest"								"latest" - to update to latest STABLE release, "*" - to update to latest release(including UNSTABLE) - http://stackoverflow.com/a/28102675
  https://docs.npmjs.com/files/package.json#dependencies

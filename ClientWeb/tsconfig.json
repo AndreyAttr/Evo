@@ -34,22 +34,22 @@
     "removeComments": false,
     "types": [ "node" ],                    //to disable require error
     "typeRoots": [ "node_modules/@types" ], //to disable require error
+
     "allowJs": false                        // Allow JavaScript files to be compiled. If true - will recompile changes in JS(not TS) files, but if false - need to do changes in TS to make JS recompile.
+    //"allowJs": true                           //To allow Webpack recompile project after changes in JS files, e.g. changing 3d party libraries as Molvwr.js
   },
   "awesomeTypescriptLoaderOptions": {
 
   },
   "include": [
+    "src/**/*.ts",
     "Evolution/**/*.ts",
-    "Evolution/**/*.html",
-    "Evolution/**/*.css",
     "Angular2/**/*.ts",
-    "Webpack/**/*.ts",   //there are typings definition files(*.d.ts) that are used in angular components
-    "wwwroot/**/*.html",
-    "wwwroot/**/*.css"
+    "Webpack/**/*.ts"   //there are typings definition files(*.d.ts) that are used in angular components
   ],
   "exclude": [
     //For TS files here in their JS files refferences on MAP will be removed: //# sourceMappingURL=webpack.config.js.map
+    //TS files here won't be included in transpiling TS to JS, so *.js and *.js.map files won't be generated for them
     "**/webpack.config.ts",
     "Webpack/**/webpack.?*.config.ts"
   ]

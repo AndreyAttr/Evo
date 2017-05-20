@@ -1,7 +1,7 @@
 import Site from "./site";
 import {Injectable, Optional} from "@angular/core";
 
-@Injectable()       //Note: need to make class accessible by using constructor with params in Angular
+@Injectable()       //Note: to make class accessible by using constructor with params in Angular
 export default class Gene {
     sites: Site[] = [];
     mutationSites: Site[] = [];
