@@ -1,7 +1,8 @@
 import {
     Component, OnInit, Inject, Optional, Injector, EventEmitter, OnDestroy
 } from '@angular/core';
-import LogService from "../Services/log.service";
+//Note: LogService - it's exported class by default, CustomLog - just exported class
+import LogService, {CustomLog} from "../Services/log.service";
 import {APP_CONFIG_TOKEN, AppConfig} from "../Config/app-config";
 import GeneService from "../Services/gene.service";
 import MutationService from "../Services/mutation.service";
@@ -25,8 +26,7 @@ import {Molecule} from "../../Libraries/Molvwr/molecule";
     templateUrl: '../Html/gene.component.html',
     styles: [String(require('../Css/gene.component.less'))],
     //only when they are here - it will create new instance of this component every time:
-    providers: [geneServiceProvider, mutationServiceProvider, Gene
-    ],
+    providers: [geneServiceProvider, mutationServiceProvider, Gene],
     inputs: ['dna'],
     //outputs: ['removeEvent:remove']
 })
@@ -43,26 +43,32 @@ export class GeneComponent extends DnaComponent implements OnInit, OnDestroy {
                 private dnaInteraction: DnaInteractionService,
                 private siteInteraction: SiteInteractionService,
                 @Inject(APP_CONFIG_TOKEN) protected config: AppConfig,
+                private appState: AppState,
                 //private geneService: GeneService,
                 //@Inject(SITE_ENUMS_TOKEN) protected siteEnum: SiteEnum,
                 private injector: Injector) {
         super();
     }
 
-    ngOnInit() {
+    private initGene(){
         //DONE: find a way how to use GeneService properly(maybe without DI, using constructor with params)
         //let geneService = this.injector.get(GeneService, "Error: GeneService can't be injected into GeneComponent!");
         //let allDnaEnumeration = this.injector.get(DNA_ENUM_TOKEN);
-        let geneService = DI.resolve<GeneService>(GeneService, geneServiceProvider,{provide: DNA_ENUM_TOKEN, useValue: this.dna}, mutationServiceProvider, AppState);
+        let geneService = DI.resolve<GeneService>(GeneService, geneServiceProvider,{provide: DNA_ENUM_TOKEN, useValue: this.dna}, mutationServiceProvider, //AppState);
+            {provide: AppState, useValue: this.appState});
         this.gene = geneService.gene;
+    }
+
+    ngOnInit() {
+        this.initGene();
 
         if (this.log) {
             let css = ['background: linear-gradient(#75ff5a, #178004)', 'border: 1px solid #3E0E02',
                 'color: white', 'display: block', 'text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3)',
                 'box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset',
-                'line-height: 40px', 'text-align: center', 'font-weight: bold'];
-            this.log.log({template: `Gene ${this.gene.name} created!!!`, styles: css});
-            //this.log.log(`The API is ${this.config.apiEndpoint}`);
+                'line-height: 40px', 'text-align: center', 'font-size: 18px', 'font-weight: bold', 'font-style: italic'];
+            this.log.log(new CustomLog(`Gene ${this.gene.name} created!!!`, css));
+            this.log.info(new CustomLog(`Gene ${this.gene.name} created!!!`));
         }
 
         this.siteInteraction.moleculaDisplayed$.subscribe(
@@ -76,9 +82,28 @@ export class GeneComponent extends DnaComponent implements OnInit, OnDestroy {
             err => this.error(err),
             () => {
                 //TODO: never come in here
-                //console.log('Molecule formula and atoms have been displayed.');
                 alert('Molecule formula and atoms have been displayed.');
             }
+        );
+
+        // const reinitializeGene: () => void = this.initGene;
+        // const subsribeAgain: (enabled: boolean) => void = (enabled) => {
+        //     //Note: call() & apply() allow to bind fuction to specific context and then immediately execute the function:
+        //     reinitializeGene.call(this);    //https://metanit.com/web/javascript/4.10.php
+        //
+        //     /*Remark: each time in reinitializeGene() we recreate GeneService which demands MutationService which demands
+        //      * Remark: new instance of AppState. Each time! So really we create NEW instance of AppState each time we create
+        //      * Remark: GeneService. But we DO NOT subscibe on .mutationChanged$ event of that NEW instance of AppState. So,
+        //      * Remark: we must REsubscribe on event of NEW generated AppState each time.*/
+        //     //Note: bind() just allow to bind function to specific context, but doesn't start execution:
+        //     this.appState.state.mutationChanged$.subscribe(subsribeAgain.bind(this));   //https://metanit.com/web/javascript/4.10.php
+        // };
+        this.appState.state.mutationChanged$.subscribe(
+            enabled => {
+                //subsribeAgain(enabled);
+                this.initGene();
+            },
+            err => this.error(err)
         );
     }
     ngOnDestroy(): void {
@@ -100,7 +125,7 @@ export class GeneComponent extends DnaComponent implements OnInit, OnDestroy {
         slides[slides.length-1] = slides[slides.length-1].substr(0, lastComaIndex).concat(';');
         let css = 'text-shadow: '.concat(...slides, 'font-size: 20px;');
         //let css = "text-shadow: -1px -1px hsl(0,100%,50%), 1px 1px hsl(6, 100%, 50%), 3px 2px hsl(12, 100%, 50%), 5px 3px hsl(18, 100%, 50%), 7px 4px hsl(24, 100%, 50%), 9px 5px hsl(30, 100%, 50%), 11px 6px hsl(36, 100%, 50%), 13px 7px hsl(42, 100%, 50%), 14px 8px hsl(48, 100%, 50%), 16px 9px hsl(54, 100%, 50%), 18px 10px hsl(60, 100%, 50%), 20px 11px hsl(66, 100%, 50%), 22px 12px hsl(72, 100%, 50%), 23px 13px hsl(78, 100%, 50%), 25px 14px hsl(84, 100%, 50%), 27px 15px hsl(90, 100%, 50%), 28px 16px hsl(96, 100%, 50%), 30px 17px hsl(102, 100%, 50%), 32px 18px hsl(108, 100%, 50%), 33px 19px hsl(114, 100%, 50%), 35px 20px hsl(120, 100%, 50%), 36px 21px hsl(126, 100%, 50%), 38px 22px hsl(132, 100%, 50%), 39px 23px hsl(138, 100%, 50%), 41px 24px hsl(144, 100%, 50%), 42px 25px hsl(150, 100%, 50%), 43px 26px hsl(156, 100%, 50%), 45px 27px hsl(162, 100%, 50%), 46px 28px hsl(168, 100%, 50%), 47px 29px hsl(174, 100%, 50%), 48px 30px hsl(180, 100%, 50%), 49px 31px hsl(186, 100%, 50%), 50px 32px hsl(192, 100%, 50%), 51px 33px hsl(200, 100%, 50%), 52px 34px hsl(206, 100%, 50%), 53px 35px hsl(212, 100%, 50%); font-size: 20px;";
-        this.log.log({template: `Gene ${this.gene.name} is destroyed!`, styles: css});
+        this.log.log(new CustomLog(`Gene ${this.gene.name} is destroyed!`, css));
     }
 
     mutate(site: Site){
@@ -113,7 +138,7 @@ export class GeneComponent extends DnaComponent implements OnInit, OnDestroy {
         // let injector = ReflectiveInjector.fromResolvedProviders(resolvedProviders);
         // let mutationService = injector.get(MutationService);
 
-        let mutationService = DI.resolve<MutationService>(MutationService, [mutationServiceProvider, AppState]);       //using this way of DI demands specifying all DI three: mutationServiceProvider use mutationServiceFactory which depends on AppState, so I specified AppState too.
+        let mutationService = DI.resolve<MutationService>(MutationService, [mutationServiceProvider, {provide: AppState, useValue: this.appState}]);       //using this way of DI demands specifying all DI three: mutationServiceProvider use mutationServiceFactory which depends on AppState, so I specified AppState too.
         mutationService.mutateSite(site);
     }
 
@@ -122,8 +147,8 @@ export class GeneComponent extends DnaComponent implements OnInit, OnDestroy {
         this.dnaInteraction.dnaRemove(this.dna);
     }
 
-    siteFocused(event: Event, molecule: SiteEnum|DnaEnum){
+    siteClicked(event: Event, molecule: SiteEnum|DnaEnum){
         event.stopPropagation();
-        this.siteInteraction.siteHover(molecule);
+        this.siteInteraction.siteClick(molecule);
     }
 }

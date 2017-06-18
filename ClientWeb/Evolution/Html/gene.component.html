@@ -1,6 +1,6 @@
 <div class="gene" highlight
      [highlight-params]="{color: '#000000', opacity: '1.0', border: 'solid 1px black', borderRadius: '8px', fontWeight: 'bold', customClass: null}"
-     (click)="siteFocused($event, dna)">
+     (click)="siteClicked($event, dna)">
     <div ngClass="row">
         <div ngClass="col-xs-4">
             <h4 ngClass="dnaName" highlight="#dcfbfb" [highlight-params]="{customClass: 'dna-name-title'}">{{gene.name}}</h4>
@@ -42,7 +42,7 @@
         <div ngClass="row">
             <div ngClass="col-xs-1 gene-label-sites-container">Original</div>
             <div ngClass="col-xs-10 col-xs-offset-1 gene-sites-container">
-                <span *ngFor="let site of gene.sites" [class]="site.name" (click)="siteFocused($event, site.site)">{{site.name}}</span>       <!--[class.site-mutated]="site.isMutated"-->
+                <span *ngFor="let site of gene.sites" [class]="site.name" (click)="siteClicked($event, site.site)">{{site.name}}</span>       <!--[class.site-mutated]="site.isMutated"-->
             </div>
         </div>
         <div *ngIf="gene.mutationSites.length > 0" ngClass="row">

@@ -6,10 +6,10 @@ import {Molecule} from "../../Libraries/Molvwr/molecule";
 
 @Injectable()
 export class SiteInteractionService {
-    private siteHoveredSources = new Subject<SiteEnum|DnaEnum>();
-    siteHovered$ = this.siteHoveredSources.asObservable();
-    siteHover(molecule: SiteEnum|DnaEnum){
-        this.siteHoveredSources.next(molecule);
+    private siteClickedSources = new Subject<SiteEnum|DnaEnum>();
+    siteClicked$ = this.siteClickedSources.asObservable();
+    siteClick(molecule: SiteEnum|DnaEnum){
+        this.siteClickedSources.next(molecule);
     }
 
     private moleculaDisplaySources = new Subject<Molecule>();
