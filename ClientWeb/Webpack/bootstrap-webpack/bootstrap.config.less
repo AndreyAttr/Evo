@@ -2,3 +2,13 @@
 
 @btn-default-color:              #444;
 @btn-default-bg:                 #eee;
+
+@import "../../Evolution/Css/common-text";
+//https://stackoverflow.com/a/16830938
+//https://stackoverflow.com/questions/30569685/importing-css-into-less
+@import (less) "../../Evolution/Css/dna-selector.component.css";
+.form-control-dna-selector{
+  .italic;
+  .form-control;
+  .dna-selector !important;
+}

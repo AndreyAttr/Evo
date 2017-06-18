@@ -21,7 +21,7 @@ export class WebApiService {
     getService<T>(serviceName: string): Observable<T>
     {
          //http.put(`${this.baseUrl}/people/${person.id}`, JSON.stringify(person),
-        let url = this.serviceUrl.concat('/', serviceName)
+        let url = this.serviceUrl.concat('/', serviceName);
         return this.http.get(url)
             .map((response: Response) =>
             {

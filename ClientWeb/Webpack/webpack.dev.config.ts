@@ -25,7 +25,7 @@ module.exports = function webpackDevConfig(options: EnvOptions = {}): IWebpackCo
                 {
                     test: /\.ts$/,
                     use:
-                        [].concat(common.Metadata.HMR ? '@angularclass/hmr-loader' : [])   //to turn on HMR for TS/HTML templates when using Angular2
+                        [].concat(common.Metadata.HMR ? {loader: '@angularclass/hmr-loader'} : [])   //to turn on HMR for TS/HTML templates when using Angular2
                             .concat([
                             {
                                 loader: 'awesome-typescript-loader',        //https://www.npmjs.com/package/shmawesome-typescript-loader

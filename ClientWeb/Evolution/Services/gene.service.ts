@@ -22,10 +22,11 @@ export default class GeneService implements Resolvable{
         {
             let site = new Site();
             let randomValue = Math.random();
-            if(randomValue >= 0.75) site.site = SiteEnum.A;
-            else if(randomValue >= 0.5) site.site = SiteEnum.C;
-            else if(randomValue >= 0.25) site.site = SiteEnum.G;
-            else site.site = SiteEnum.T;
+            if(randomValue >= 0.8) site.site = SiteEnum.A;
+            else if(randomValue >= 0.6) site.site = SiteEnum.C;
+            else if(randomValue >= 0.4) site.site = SiteEnum.G;
+            else if(randomValue >= 0.2) site.site = SiteEnum.T;
+            else site.site = SiteEnum.U;
 
             sites.push(site);
         }

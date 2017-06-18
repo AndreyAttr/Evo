@@ -1,4 +1,7 @@
-﻿var Molvwr;
+﻿//import { Molecule } from './molecule';    //TODO: Error: using this cause error in browser: Uncaught ReferenceError: exports is not defined
+let Molecule = require('./molecule');
+
+var Molvwr;
 (function (Molvwr) {
     var BabylonContext = (function () {
         function BabylonContext(canvas) {
@@ -104,7 +107,7 @@ var Molvwr;
 var __global = this;
 var Molvwr;
 (function (Molvwr) {
-    function process() {
+    function process(element, datareadycallback) {
         if (!__global.BABYLON) {
             console.error("Babylon.js is not available, please add a reference to Babylon.js script");
             return;
@@ -153,7 +156,12 @@ var Molvwr;
                 }
                 if (moleculeUrl && format) {
                     var viewer = new Viewer(e, options);
-                    viewer.loadContentFromUrl(moleculeUrl, format);
+                    if (moleculeUrl.startsWith('http') || moleculeUrl.startsWith('https')
+                        || moleculeUrl.startsWith('../') || moleculeUrl.startsWith('./'))
+                        viewer.loadContentFromUrl(moleculeUrl, format, datareadycallback);
+                    else
+                        viewer.loadContentFromString(moleculeUrl, format, datareadycallback);
+
                 }
             }
         }
@@ -563,10 +571,7 @@ var Molvwr;
             parse: function (content) {
                 console.log("parsing mol content");
                 //console.log(content);
-                var molecule = {
-                    atoms: [],
-                    title: null
-                };
+                let molecule = new Molecule();
                 var lines = content.split('\n');
                 molecule.title = lines[1];
                 for (var i = 0, l = lines.length; i < l; i++) {
@@ -599,6 +604,10 @@ var Molvwr;
                             }
                         }
                     }
+                    else if(lines[i].startsWith('> <Formula>'))
+                    {
+                        molecule.formula = lines[i+1];
+                    }
                 }
                 console.log("found " + molecule.atoms.length);
                 return molecule;
@@ -621,10 +630,7 @@ var Molvwr;
             parse: function (content) {
                 console.log("parsing pdb content");
                 //console.log(content);
-                var molecule = {
-                    atoms: [],
-                    title: null
-                };
+                let molecule = new Molecule();
                 var lines = content.split('\n');
                 for (var i = 0, l = lines.length; i < l; i++) {
                     var line = lines[i];
@@ -675,10 +681,7 @@ var Molvwr;
             parse: function (content) {
                 console.log("parsing xyz content");
                 //console.log(content);
-                var molecule = {
-                    atoms: [],
-                    title: null
-                };
+                let molecule = new Molecule();
                 var lines = content.split('\n');
                 molecule.title = lines[1];
                 for (var i = 2, l = lines.length; i < l; i++) {

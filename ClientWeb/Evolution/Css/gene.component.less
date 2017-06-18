@@ -1,13 +1,12 @@
-@import "common-text";      /*LESS*/
-@import "common-gene";
+@import "common-gene";      /*LESS*/
 //@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css');
 
 .dnaName{
-  .underline;   /*LESS - mixins*/
+  //.underline;   /*LESS - mixins*/
   .italic;
-  font-family: Tahoma;
+  //font-family: Tahoma;
   font-size: 25px;
-  color: #7c4dff;
+  color: green; //#7c4dff;
   display: inline-block;
   padding: 0px 10px;
 }
@@ -16,7 +15,8 @@
   //display:inline-block;
   //clear:both;
   //float:left;
-  color: white;
+  .bold;
+  color: green;
   padding: 0px 4px;
   margin: 4px 0px;
   opacity: 0.4;
@@ -56,3 +56,12 @@ div.gene-sites-container{
   .dnaName;
 }
 
+
+.atomColor{
+  padding: 5px 13px;
+  border: solid 1px #000000;
+  border-radius: 5px;
+  width: 10px;
+  margin: 0px 5px;
+  line-height: 30px;
+}

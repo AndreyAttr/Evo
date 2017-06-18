@@ -45,6 +45,9 @@ export default class MutationService implements Resolvable{
                 site.site = SiteEnum.T;
                 break;
             case SiteEnum.T:
+                site.site = SiteEnum.U;
+                break;
+            case SiteEnum.U:
                 site.site = SiteEnum.A;
                 break;
         }

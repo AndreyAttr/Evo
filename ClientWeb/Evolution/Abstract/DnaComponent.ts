@@ -13,7 +13,7 @@ export abstract class DnaComponent {
     error(message: string): never;
     error(message: Error): never;
     error(message: string | Error): never{
-        if (typeof message === 'string')
+        if (typeof message == 'string')
             throw new Error(message);
         else if(message instanceof Error)
             throw message;

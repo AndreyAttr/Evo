@@ -1,0 +1,13 @@
+//Done: I used MOL files from this site:
+http://www.chemspider.com/Chemical-Structure.1141.html?rid=b243882c-44b0-4923-9953-596ccdbdaadc
+
+//Error: wrong PDB files here for A, C, G, T, U:
+https://www.nyu.edu/pages/mathmol/library/dna/
+https://www.nyu.edu/pages/mathmol/library/
+https://www.nyu.edu/pages/mathmol/
+
+http://www.faidherbe.org/site/cours/dupuis/banque.htm
+
+http://www.worldofmolecules.com/disease/nicotine.htm
+
+http://www.rcsb.org/pdb/software/rest.do					Restfull API

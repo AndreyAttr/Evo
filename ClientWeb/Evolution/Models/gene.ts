@@ -23,6 +23,8 @@ export default class Gene {
     }
 
     // constructor(parameters: {_name: string, _description: string, _sites: Site[]}) {
-    //     let {_name, _description, _sites} = parameters; }           //TODO: what is it? looks like spare/destruction operators, no?
+    //TODO: what is it? looks like spare/destruction operators, no?
+    //Done: it's destruction(but actually it uses all the properties from 'parameters' object. So it's destruction, but without destruction :))
+    //     let {_name, _description, _sites} = parameters; }
 
 }

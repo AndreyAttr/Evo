@@ -262,6 +262,9 @@ ModelManifest.xml
 /ClientWeb/Evolution/**/*.js
 /ClientWeb/Evolution/**/*.map
 
+/ClientWeb/Libraries/Molvwr/molecule.js
+/ClientWeb/Libraries/Molvwr/molecule.js.map
+
 
 /Web/wwwroot/Angular2/**/*.js
 

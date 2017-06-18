@@ -2,15 +2,17 @@
     <!--TODO: send update message to child component to update its state, for example when mutationEnabled is changed (from here - parent component)-->
     <!--When app.component mutationEnabled is updated you need to send signal about that for child components(this for example) and update them - rerendering-->
     <!--Also you need to remove this switch/case and send that signal further to gene.component that it can redraw itself-->
-    <div [ngSwitch]="mutationEnabled">
-        <template [ngSwitchCase]="false">
-            <gene-component [dna]="dna">Place for gene...</gene-component>
-        </template>
-        <template [ngSwitchCase]="true">
-            <gene-component [dna]="dna">Place for gene...</gene-component>
-        </template>
-        <template ngSwitchDefault>
-            Incorrect value
-        </template>
-    </div>
+    <!--<div [ngSwitch]="mutationEnabled">-->
+        <!--<ng-template [ngSwitchCase]="false">-->
+            <!--<gene-component [dna]="dna">Place for gene...</gene-component>-->
+        <!--</ng-template>-->
+        <!--<ng-template [ngSwitchCase]="true">-->
+            <!--<gene-component [dna]="dna">Place for gene...</gene-component>-->
+        <!--</ng-template>-->
+        <!--<ng-template ngSwitchDefault>-->
+            <!--Incorrect value-->
+        <!--</ng-template>-->
+    <!--</div>-->
+    <!--TODO: you just need to put smt. like this instead of that ugly switch/case-->
+    <gene-component [dna]="dna">Place for gene...</gene-component>
 </div>

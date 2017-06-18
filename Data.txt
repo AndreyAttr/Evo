@@ -44,8 +44,9 @@ npm install zone.js@0.8.5 --save						installation package to the current projec
 npm install --save-dev webpack-notifier					installation package to the current project devDependencies(locally)
 npm install webpack babel-loader babel-core --save-dev	install several packages to devDependencies(locally): webpack, babel-loader, babel-core
 npm install gulp -g										installation package on the machine(globally)
+npm i imports-loader exports-loader — save-dev			install two packages
 
-npm install -S typescript@2.2.2							install specific versiont to dependencies
+npm install -S typescript@2.2.2							install specific versiont to dependencies(-S) or devDependencies(-D)
 TravelOrganizerWeb@1.0.0 E:\Evo\ClientWeb
 `-- typescript@2.2.2
 

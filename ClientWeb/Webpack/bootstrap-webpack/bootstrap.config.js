@@ -1,6 +1,39 @@
+console.log('--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//Workaround: https://github.com/gowravshekar/bootstrap-webpack/issues/37#issuecomment-286517959
+const extractCSS = new ExtractTextPlugin({filename: 'css/bootstrap_[name].css', allChunks: true})
+    .extract({
+            fallback: 'style-loader',
+            use: [{loader: 'css-loader', options: {sourceMap: true}},
+                {loader: 'less-loader', options: {sourceMap: true}}]
+    });
+var styleLoader = extractCSS.map( chunk => {
+    const path = chunk.loader;
+    if (chunk.options) {
+        const options = JSON.stringify(chunk.options);
+        console.log(`${path}?${options}`);
+        return `${path}?${options}`;
+    }
+    console.log(path);
+    return path;
+}).join('!');
+console.log('=======================================================================================');
+
 
 module.exports = {
+    //Fixme: Doesn't work: https://www.npmjs.com/package/bootstrap-webpack#extract-text-webpack-plugin
+    //Done: Fixed with workaround
+    styleLoader: styleLoader,
+    //Remark: Any of these stuffs doesn't work - the only one solution I found - it's workaround
+    // styleLoader: ExtractTextPlugin.extract({
+    //     fallback: 'style-loader',
+    //     use: ['css-loader', 'less-loader']
+    // }),
+    //styleLoader: extractCSS.extract({fallback: 'style-loader', use: ['css-loader', 'less-loader']}),
+    //styleLoader: require('extract-text-webpack-plugin').extract({use: ['css-loader', 'less-loader']}),
+    //styleLoader: require('extract-text-webpack-plugin').extract('style-loader', 'css-loader!less-loader'),
+
     scripts: {
         // add every bootstrap script you need
         'transition': true,
@@ -16,13 +49,6 @@ module.exports = {
         'tab': true,
         'affix': true
     },
-    //Doesn't work: https://www.npmjs.com/package/bootstrap-webpack#extract-text-webpack-plugin
-    // styleLoader: ExtractTextPlugin.extract({
-    //     fallback: 'style-loader',
-    //     use: ['css-loader', 'less-loader']
-    // }),
-
-    //styleLoader: require('extract-text-webpack-plugin').extract('style-loader', 'css-loader!less-loader'),
     styles: {
         // add every bootstrap style you need
         "mixins": true,

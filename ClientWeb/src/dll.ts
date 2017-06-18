@@ -88,9 +88,13 @@ function vendors() : Array<string> {
         'jquery',
         //'bootstrap-webpack'
         //'bootstrap-webpack!./bootstrap.config.js'
-        'bootstrap-webpack!./Webpack/bootstrap-webpack/bootstrap.config.js'
+        //'bootstrap-webpack!./Webpack/bootstrap-webpack/bootstrap.config.js'
     ];
     return vendors;
+}
+function bootstrap(): string[]{
+    return ['bootstrap-webpack!./Webpack/bootstrap-webpack/bootstrap.config.js'/*,
+        './Evolution/Css/dna-selector.component.css'*/];
 }
 
 // RxJS
@@ -108,14 +112,14 @@ function rxjs() : Array<string> {
     ];
 }
 
-function  molecules(): Array<string>{
-    return [
-        helper.root('Evolution/Molecules/A.pdb'),
-        helper.root('Evolution/Molecules/C.pdb'),
-        helper.root('Evolution/Molecules/G.pdb'),
-        helper.root('Evolution/Molecules/T.pdb')
-    ];
-}
+// function  molecules(): Array<string>{
+//     return [
+//         helper.root('Evolution/Molecules/A.pdb'),
+//         helper.root('Evolution/Molecules/C.pdb'),
+//         helper.root('Evolution/Molecules/G.pdb'),
+//         helper.root('Evolution/Molecules/T.pdb')
+//     ];
+// }
 
-export { polyfills, vendors, rxjs, molecules};
+export { polyfills, vendors, rxjs, bootstrap/*, molecules*/};
 

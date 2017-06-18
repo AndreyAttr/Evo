@@ -2,7 +2,8 @@
   background-color: @color;
 }
 .background-image(@image, @repeat: no-repeat){
-  background: @image @repeat;
+  background: @image;
+  background-repeat: @repeat;
 }
 
 .dna-background{
@@ -15,5 +16,16 @@
 }
 
 .dark-background-color{
-  .background-color(#aaaaaa);
+  .background-color(rgba(170, 170, 170, .34));
+  //opacity: 0.9;
 }
+.background-opacity{
+  .background-color(rgba(255, 255, 255, 0.84));
+}
+
+.dna-flowchat{
+  .background-image(@image: url('../../wwwroot/images/background/0cf7493b2f0b0ad2e5397b807129a1de.jpg')); //, @repeat: space);
+  //background-position: center;
+  background-size: cover;
+}
+

@@ -1,7 +1,7 @@
 <h4>Please choose DNA type to add</h4>
 <div ngClass="row">
     <div ngClass="col-xs-6 form-group">
-        <select [disabled]="!hasAvailableDna" #availableDna ngClass="dna-selector form-control">
+        <select [disabled]="!hasAvailableDna" #availableDna ngClass="form-control-dna-selector">
             <option *ngFor="let dna of availableDnas" value={{dna}}>{{getDnaName(dna)}}</option>
         </select>
         <button [disabled]="!hasAvailableDna" (click)="add(availableDna.value)" class="btn btn-default">Add available</button>
@@ -10,7 +10,7 @@
     <div ngClass="col-xs-6 form-group">
         <!--TODO: clarify why doesn't work-->
         <!--<select name="selectedDna" [ngModel]="selectedDna">-->
-         <select [disabled]="!hasSelectedDna" #selectedDna ngClass="dna-selector form-control">
+         <select [disabled]="!hasSelectedDna" #selectedDna ngClass="form-control-dna-selector">
             <option *ngFor="let dna of selectedDnas" value={{dna}}>{{getDnaName(dna)}}</option>
         </select>
         <button [disabled]="!hasSelectedDna" (click)="remove(selectedDna.value)" ngClass="btn btn-default">Remove selected</button>
