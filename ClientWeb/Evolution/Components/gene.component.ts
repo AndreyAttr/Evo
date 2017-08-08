@@ -23,6 +23,7 @@ import {
 } from "../Services/di-interaction-service-tokens";
 import ObjectHelper from "../Helpers/object-helper";
 import {ArrayHelper} from "../Helpers/array-helper";
+import {ManuallyCast} from "../Abstract/manually-cast";
 
 @Component({
     moduleId: module.id,
@@ -34,7 +35,7 @@ import {ArrayHelper} from "../Helpers/array-helper";
     inputs: ['gene'],
     //outputs: ['removeEvent:remove']
 })
-export class GeneComponent extends BaseGeneComponent implements OnInit, OnDestroy {
+export class GeneComponent extends BaseGeneComponent implements OnInit, OnDestroy, ManuallyCast<Site> {
     // @Input() dna: GeneEnum;
     // @Output('remove') removeEvent = new EventEmitter<GeneEnum>();
     gene: Gene;
@@ -54,6 +55,16 @@ export class GeneComponent extends BaseGeneComponent implements OnInit, OnDestro
         super();
     }
 
+    manuallyCastTo(source: any): Site[] {
+        //Workaround: when we do deep copy of some item with ObjectHelper.deepCopy(), it stores the structure of tree of properties.
+        //Workaround: BUT it also looses the typing, so the structure is the same, but it's anonimous type. And if original type has
+        //Workaround: some computable property, it's lost in anonimous type. It's exactly what happens with Site.name computable prop.
+        //Done: So, to fix this problem created interface ManuallyCast which contains this method manuallyCast and the solution is
+        //Done: RE-CREATING original type by using data from anonimous type that we have. It's workaround but I have doubts the problem
+        //Done: maybe resolved any different way:
+        return source.map((item:Site) => new Site(item.site, item.isMutated));
+    }
+
     private getMutationService(appState?: AppState):MutationService{
         //This function is slower than the corresponding fromResolvedProviders because it needs to resolve the passed-in providers first
         //let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate([mutationServiceProvider, AppState]);        //using this way of DI demands specifying all DI three: mutationServiceProvider use mutationServiceFactory which depends on AppState, so I specified AppState too.
@@ -70,6 +81,8 @@ export class GeneComponent extends BaseGeneComponent implements OnInit, OnDestro
         //DONE: find a way how to use GeneService properly(maybe without DI, using constructor with params)
         //let geneService = this.injector.get(GeneService, "Error: GeneService can't be injected into GeneComponent!");
         //let allDnaEnumeration = this.injector.get(GENE_ENUM_TOKEN);
+        this.gene.sites = this.manuallyCastTo(this.gene.sites);                     //workaround
+        this.gene.mutationSites = this.manuallyCastTo(this.gene.mutationSites);     //workaround
         return DI.resolve<GeneService>(GeneService, geneServiceProvider, {provide: Gene, useValue: this.gene},//{provide: GENE_ENUM_TOKEN, useValue: this.dna},
             {provide: MutationService, useValue: this.getMutationService()});
     }
@@ -125,7 +138,7 @@ export class GeneComponent extends BaseGeneComponent implements OnInit, OnDestro
     }
     private switchMutation(mutationSites?: Site[]) : (enabled:boolean)=>void{
         if(mutationSites)
-            this.gene.mutationSites = mutationSites.map(item => new Site(item.site, item.isMutated));   //Workaround
+            this.gene.mutationSites = this.manuallyCastTo(mutationSites);   //workaround
         return enabled => {
             this.mutationEnabled = enabled;
         };

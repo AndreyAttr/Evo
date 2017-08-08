@@ -6,6 +6,7 @@ import {BaseGeneComponent} from "../Abstract/base-gene.component";
 import Site from "../Models/site";
 import {SiteEnum} from "../Enums/site-enum";
 import {GeneInteractionToken} from "../Services/di-interaction-service-tokens";
+import ObjectHelper from "../Helpers/object-helper";
 
 
 @Component({
@@ -80,14 +81,14 @@ export class GeneEditorComponent extends BaseGeneComponent implements OnInit, On
             if (success)
                 //Remark: cleans form AND because this.gene bounded to form by [(ngModel)]="gene.name" etc. it sets all the gene properties to NULL and
                 //Remark: also sets this.currentChosenSite which is also bounded(so do not need to clean up it manually):
-                this.editorForm.reset()
+                this.editorForm.reset();
         });
     }
 
     add(){
-        //TODO: Angular/TS allows to do copies simplier - find it
-        //Note: Using local LET variable to prevent setting all the this.gene properties to NULL when we reset the form
-        let gene = new Gene(this.gene.name, [this.currentChosenSite], this.gene.description);
+        this.gene.sites = [this.currentChosenSite];
+        //Note: Using deepCopy of instance (may use also local LET variable - but it's workaround) to prevent setting all the this.gene properties to NULL when we reset the form
+        const gene = ObjectHelper.deepCopy(this.gene) as Gene;
         this.geneInteraction.event(gene);
     }
     onSubmit(){
